@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Delete a blog</title>
+    <script src="https://cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+</head>
+<body>
+<h2>Are you sure to delete?</h2>
+
+
+<form action="#" th:action="@{/deleteBlog}" th:object="${deleteBlog}" method="post">
+    <input th:type="hidden" name="id" th:field="*{id}">
+    <table>
+        <tr>
+            <td>Author</td>
+            <td><input type="text" th:field="*{author}" ></td>
+        </tr>
+        <tr>
+            <td>Title</td>
+            <td><input type="text" th:field="*{title}" ></td>
+        </tr>
+        <tr>
+            <td><label for="content" th:text="Contents"></label></td>
+            <td><textarea name="content" id="content" cols="50" rows="10" th:field="*{content}" th:text="*{content}"></textarea></td>
+            <script>
+                CKEDITOR.replace( 'content' );
+            </script>
+        </tr>
+        <tr>
+            <td><button type="submit">Submit</button></td>
+            <td>
+                <a href="/"  th:text="Back"></a>
+            </td>
+        </tr>
+    </table>
+</form>
+
+
+</body>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Write a blog</title>
+    <script src="https://cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+</head>
+<body>
+    <h2>Write a blog</h2>
+
+    <th:block th:if="${mess}">
+        <p style="color: green" th:text="${mess}"></p>
+    </th:block>
+    <form action="#" th:action="@{/submitBlog}" th:object="${blog}" method="post">
+
+    <table>
+        <tr>
+            <td>Author</td>
+            <td><input type="text" th:field="*{author}" th:text="*{author}"></td>
+        </tr>
+        <tr>
+            <td>Title</td>
+            <td><input type="text" th:field="*{title}" th:text="*{title}"></td>
+        </tr>
+        <tr>
+            <td><label for="content" th:text="Contents"></label></td>
+            <td><textarea name="content" id="content" cols="50" rows="10" th:field="*{content}" th:text="*{content}"></textarea></td>
+            <script>
+                CKEDITOR.replace( 'content' );
+            </script>
+        </tr>
+        <tr>
+            <td colspan="2"><button type="submit">Submit</button></td>
+        </tr>
+    </table>
+    </form>
+
+
+</body>
+</html>
