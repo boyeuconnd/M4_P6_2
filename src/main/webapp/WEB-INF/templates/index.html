@@ -10,9 +10,10 @@
 <div th:each="blog : ${blogList}" style="width: 100%">
 
     <div style="width: 20%;float: left" class="generalInfo">
-        <span>Title: </span><span th:text="${blog.title}" ></span><br>
+        <span>Title: </span><span style="font-weight: bold" th:text="${blog.title}" ></span><br>
         <span>Author: </span><span th:text="${blog.author}" ></span><br>
         <span>Create Time: </span><span th:text="${blog.createDate}" ></span><br>
+        <span>Category: </span><span th:text="${blog.category.name}"></span><br>
         <a th:href="@{/edit/__${blog.id}__ }">Edit</a>
         <a th:href="@{/delete/__${blog.id}__ }">Delete</a>
     </div>

@@ -15,16 +15,22 @@ public class Blog {
     private String title;
     private Timestamp createDate;
 
+
+    @ManyToOne
+    @JoinColumn(name = "category_id",nullable = true)
+    private Category category;
+
     @Column(columnDefinition = "TEXT")
     private String content;
 
     public Blog() {
     }
-    public Blog(String title,String author,String content, Timestamp createDate){
+    public Blog(String title,String author,String content, Timestamp createDate,Category category){
         this.title=title;
         this.author=author;
         this.content=content;
         this.createDate=createDate;
+        this.category=category;
     }
 
     public Long getId() {
@@ -65,5 +71,13 @@ public class Blog {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
