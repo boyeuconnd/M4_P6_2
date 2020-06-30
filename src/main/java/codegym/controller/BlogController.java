@@ -2,7 +2,9 @@ package codegym.controller;
 
 
 import codegym.model.Blog;
+import codegym.model.Category;
 import codegym.service.BlogService;
+import codegym.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,16 @@ public class BlogController {
     @Autowired
     BlogService blogService;
 
+    @Autowired
+    CategoryService categoryService;
+
+    @ModelAttribute("categories")
+    public Iterable<Category> categories(){
+        return categoryService.findAll();
+    }
+
+
+
     @GetMapping("/")
     public ModelAndView showIndex(){
         ModelAndView modelAndView = new ModelAndView("index");
@@ -37,13 +49,14 @@ public class BlogController {
         return blogs;
     }
 
+
     @GetMapping("/create")
     public ModelAndView showWriteForm(){
         ModelAndView mav = new ModelAndView("create","blog",new Blog());
         return mav;
     }
 
-    @PostMapping("/submitBlog")
+    @PostMapping("/create")
     public ModelAndView submitNewBlog(@ModelAttribute("blog") Blog blog){
         blog.setCreateDate(new Timestamp(System.currentTimeMillis()));
         blogService.save(blog);

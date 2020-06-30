@@ -1,7 +1,10 @@
 import codegym.filter.CharacterSetFilter;
+import codegym.formatter.CategoryFormatter;
 import codegym.repository.BlogRepository;
 import codegym.service.BlogService;
+import codegym.service.CategoryService;
 import codegym.service.impl.BlogServiceImpl;
+import codegym.service.impl.CategoryServiceImpl;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -10,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -122,17 +126,18 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
     }
 
     @Bean
+    public CategoryService categoryService(){return new CategoryServiceImpl();}
+
+
+    @Bean
     public CharacterSetFilter characterSetFilter(){
         return new CharacterSetFilter();
     }
 
-//    @Bean
-//    public CustomerRepositoryImpl customerRepository() {
-//        return new CustomerRepositoryImpl();
-//    }
-//
-//    @Bean
-//    public CustomerService customerService() {
-//        return new CustomerServiceImpl();
-//    }
+
+    //Khai báo formatter nếu không sẽ bị lỗi khi nhập category
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addFormatter(new CategoryFormatter(applicationContext.getBean(CategoryService.class)));
+    }
 }

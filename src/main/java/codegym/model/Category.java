@@ -1,11 +1,15 @@
 package codegym.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Table(name = "category")
 @Entity
+@JsonIgnoreProperties(value= {"blogs"})
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,7 +43,7 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
-
+//
 //    public List<Blog> getBlogs() {
 //        return blogs;
 //    }

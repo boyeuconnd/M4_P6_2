@@ -2,7 +2,7 @@ package codegym.model;
 
 
 import javax.persistence.*;
-import java.awt.*;
+
 import java.sql.Timestamp;
 
 @Entity
@@ -17,7 +17,7 @@ public class Blog {
 
 
     @ManyToOne
-    @JoinColumn(name = "category_id",nullable = true)
+    @JoinColumn(name = "category_id", nullable=false)
     private Category category;
 
     @Column(columnDefinition = "TEXT")
@@ -25,6 +25,7 @@ public class Blog {
 
     public Blog() {
     }
+
     public Blog(String title,String author,String content, Timestamp createDate,Category category){
         this.title=title;
         this.author=author;

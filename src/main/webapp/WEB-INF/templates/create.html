@@ -11,7 +11,7 @@
     <th:block th:if="${mess}">
         <p style="color: green" th:text="${mess}"></p>
     </th:block>
-    <form action="#" th:action="@{/submitBlog}" th:object="${blog}" method="post">
+    <form action="#" th:action="@{/create}" th:object="${blog}" method="post">
 
     <table>
         <tr>
@@ -21,6 +21,14 @@
         <tr>
             <td>Title</td>
             <td><input type="text" th:field="*{title}" th:text="*{title}"></td>
+        </tr>
+        <tr>
+            <td>Category</td>
+            <td>
+                <select th:field="*{category}">
+                    <option th:each="c : ${categories}" th:value="${c.id}" th:text="${c.name}"></option>
+                </select>
+            </td>
         </tr>
         <tr>
             <td><label for="content" th:text="Contents"></label></td>
