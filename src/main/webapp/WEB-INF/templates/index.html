@@ -7,7 +7,12 @@
 <body>
 <a href="/create">Write a blog</a>
 <h1>Blogs</h1>
-<div th:each="blog : ${blogList}" style="width: 100%">
+<div>
+    <a th:href="@{'/'(page=${blogs.number - 1})}" th:if="${blogs.hasPrevious()}">Previous</a>
+    <span th:text="${blogs.number + 1}"></span>/<span th:text="${blogs.totalPages}"></span>
+    <a th:href="@{'/'(page=${blogs.number + 1})}" th:if="${blogs.hasNext()}">Next</a>
+</div>
+<div th:each="blog : ${blogs}" style="width: 100%">
 
     <div style="width: 20%;float: left" class="generalInfo">
         <span>Title: </span><span style="font-weight: bold" th:text="${blog.title}" ></span><br>
@@ -20,7 +25,9 @@
     <div style="width: 79%;float:left; border: 1px green solid" class="contentContainer">
         <span th:utext="${blog.content}"></span>
     </div>
+
 </div>
+
 
 </body>
 </html>

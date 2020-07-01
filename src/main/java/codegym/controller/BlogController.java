@@ -6,8 +6,10 @@ import codegym.model.Category;
 import codegym.service.BlogService;
 import codegym.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,16 +38,16 @@ public class BlogController {
 
 
     @GetMapping("/")
-    public ModelAndView showIndex(){
+    public ModelAndView showIndex(@PageableDefault(size = 2)Pageable pageable){
+        Page<Blog> blogList = blogService.findAll(pageable);
         ModelAndView modelAndView = new ModelAndView("index");
-        Iterable blogList = blogService.findAll();
         modelAndView.addObject("blogs",blogList);
         return modelAndView;
     }
 
     @ModelAttribute("blogList")
-    public Iterable<Blog> getBlogs(){
-        Iterable<Blog> blogs = blogService.findAll();
+    public Page<Blog> getBlogs(Pageable pageable){
+        Page<Blog> blogs = blogService.findAll(pageable);
         return blogs;
     }
 
