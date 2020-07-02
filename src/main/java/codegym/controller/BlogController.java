@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -38,13 +37,18 @@ public class BlogController {
     @GetMapping("/")
     public ModelAndView showIndex(@RequestParam("s") Optional<String> keyword,@PageableDefault(size = 2)Pageable pageable){
         Page<Blog> blogList;
+        ModelAndView modelAndView = new ModelAndView("index");
         if(keyword.isPresent()){
+
             blogList= blogService.findAllByTitleContaining(keyword.get(),pageable);
+            modelAndView.addObject("keyword",keyword);
+            if(!blogList.hasContent()){
+                modelAndView.addObject("mess","No result");
+            }
         }else {
 
             blogList= blogService.findAll(pageable);
         }
-        ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("blogs",blogList);
         return modelAndView;
     }

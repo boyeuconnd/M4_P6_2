@@ -12,11 +12,24 @@
     <input name="s" type="text"/>
     <button type="submit" th:text="Search"></button>
 </form><br/>
-<div>
+<th:block th:if="${mess}">
+    <p style="color: green" th:text="${mess}"></p>
+</th:block>
+<br>
+<th:block th:if="${keyword==null}">
     <a th:href="@{'/'(page=${blogs.number - 1})}" th:if="${blogs.hasPrevious()}">Previous</a>
-    <span th:text="${blogs.number + 1}"></span>/<span th:text="${blogs.totalPages}"></span>
+    <span th:if="${blogs.hasNext()}">
+        <span th:text="${blogs.number + 1}"></span>/<span th:text="${blogs.totalPages}"></span>
+    </span>
     <a th:href="@{'/'(page=${blogs.number + 1})}" th:if="${blogs.hasNext()}">Next</a>
-</div>
+</th:block>
+<th:block th:if="${keyword}">
+    <a th:href="@{'/'(s=${keyword.get()},page=${blogs.number - 1})}" th:if="${blogs.hasPrevious()}">Previous</a>
+    <span th:if="${blogs.hasNext()}">
+        <span th:text="${blogs.number + 1}"></span>/<span th:text="${blogs.totalPages}"></span>
+    </span>
+    <a th:href="@{'/'(s=${keyword.get()},page=${blogs.number + 1})}" th:if="${blogs.hasNext()}">Next</a>
+</th:block>
 <br>
 <div th:each="blog : ${blogs}" style="width: 100%">
 
@@ -36,9 +49,12 @@
 <br>
 <div>
     <a th:href="@{'/'(page=${blogs.number - 1})}" th:if="${blogs.hasPrevious()}">Previous</a>
-    <span th:text="${blogs.number + 1}"></span>/<span th:text="${blogs.totalPages}"></span>
+    <span th:if="${blogs.hasNext()}">
+        <span th:text="${blogs.number + 1}"></span>/<span th:text="${blogs.totalPages}"></span>
+    </span>
     <a th:href="@{'/'(page=${blogs.number + 1})}" th:if="${blogs.hasNext()}">Next</a>
 </div>
+
 
 
 </body>
