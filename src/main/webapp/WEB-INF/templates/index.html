@@ -7,11 +7,17 @@
 <body>
 <a href="/create">Write a blog</a>
 <h1>Blogs</h1>
+<form>
+    Search by blog title:
+    <input name="s" type="text"/>
+    <button type="submit" th:text="Search"></button>
+</form><br/>
 <div>
     <a th:href="@{'/'(page=${blogs.number - 1})}" th:if="${blogs.hasPrevious()}">Previous</a>
     <span th:text="${blogs.number + 1}"></span>/<span th:text="${blogs.totalPages}"></span>
     <a th:href="@{'/'(page=${blogs.number + 1})}" th:if="${blogs.hasNext()}">Next</a>
 </div>
+<br>
 <div th:each="blog : ${blogs}" style="width: 100%">
 
     <div style="width: 20%;float: left" class="generalInfo">
@@ -26,6 +32,12 @@
         <span th:utext="${blog.content}"></span>
     </div>
 
+</div>
+<br>
+<div>
+    <a th:href="@{'/'(page=${blogs.number - 1})}" th:if="${blogs.hasPrevious()}">Previous</a>
+    <span th:text="${blogs.number + 1}"></span>/<span th:text="${blogs.totalPages}"></span>
+    <a th:href="@{'/'(page=${blogs.number + 1})}" th:if="${blogs.hasNext()}">Next</a>
 </div>
 
 

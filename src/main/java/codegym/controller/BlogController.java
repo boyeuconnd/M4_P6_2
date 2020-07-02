@@ -10,15 +10,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @EnableWebMvc
@@ -38,8 +36,14 @@ public class BlogController {
 
 
     @GetMapping("/")
-    public ModelAndView showIndex(@PageableDefault(size = 2)Pageable pageable){
-        Page<Blog> blogList = blogService.findAll(pageable);
+    public ModelAndView showIndex(@RequestParam("s") Optional<String> keyword,@PageableDefault(size = 2)Pageable pageable){
+        Page<Blog> blogList;
+        if(keyword.isPresent()){
+            blogList= blogService.findAllByTitleContaining(keyword.get(),pageable);
+        }else {
+
+            blogList= blogService.findAll(pageable);
+        }
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("blogs",blogList);
         return modelAndView;

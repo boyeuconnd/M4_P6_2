@@ -35,4 +35,9 @@ public class BlogServiceImpl implements BlogService {
         blogRepository.delete(id);
 
     }
+
+    @Override
+    public Page<Blog> findAllByTitleContaining(String title, Pageable pageable) {
+        return blogRepository.findAllByTitleContaining(title,pageable);
+    }
 }
