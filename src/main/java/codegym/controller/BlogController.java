@@ -41,7 +41,7 @@ public class BlogController {
         if(keyword.isPresent()){
 
             blogList= blogService.findAllByTitleContaining(keyword.get(),pageable);
-            modelAndView.addObject("keyword",keyword);
+            modelAndView.addObject("keyword",keyword.get());
             if(!blogList.hasContent()){
                 modelAndView.addObject("mess","No result");
             }
@@ -57,6 +57,13 @@ public class BlogController {
     public Page<Blog> getBlogs(Pageable pageable){
         Page<Blog> blogs = blogService.findAll(pageable);
         return blogs;
+    }
+
+    @GetMapping("/blog/{id}")
+    public ModelAndView showBlogDetail(@PathVariable("id") Long id){
+        ModelAndView modelAndView = new ModelAndView("blog-detail","blog",blogService.findById(id));
+
+        return modelAndView;
     }
 
 
