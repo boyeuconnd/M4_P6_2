@@ -19,15 +19,6 @@ public class CategoryFormatter implements Formatter<Category> {
         this.categoryService=categoryService;
     }
 
-    /**
-     * Parse a text String to produce a T.
-     *
-     * @param text   the text string
-     * @param locale the current user locale
-     * @return an instance of T
-     * @throws ParseException           when a parse exception occurs in a java.text parsing library
-     * @throws IllegalArgumentException when a parse exception occurs
-     */
     @Override
     public Category parse(String text, Locale locale) throws ParseException {
         return categoryService.findById(Long.parseLong(text));
